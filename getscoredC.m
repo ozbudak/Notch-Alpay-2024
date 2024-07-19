@@ -9,7 +9,7 @@ function score=getscoredC(parameters, pb1, pb2)
 score=0; % Initialize the score to zero
 
 % Simulate the model with the given parameters
-[t,mh1Matrix]=dCmodel(parameters,pb1,pb2);
+[t,mh1Matrix]=dCmodelPF(parameters,pb1,pb2);
 % Check if her1 mRNA has sustained oscillations
 if checkSusOsc(t,mh1Matrix(1,:))==true
     score=score+1;
@@ -23,7 +23,7 @@ if score>1
     % Check the effect of removing deltaC
     paramC=parameters;
     paramC(1)=0;
-    [t,mh1Matrix]=dCmodel(paramC,pb1,pb2);
+    [t,mh1Matrix]=dCmodelPF(paramC,pb1,pb2);
     if checkSusOsc(t,mh1Matrix(1,:))==true
         score=score+1;
     end
@@ -32,7 +32,7 @@ if score>1
     % Check the effect of removing deltaD
     paramD=parameters;
     paramD(3)=0;
-    [t,mh1Matrix]=dCmodel(paramD,pb1,pb2);
+    [t,mh1Matrix]=dCmodelPF(paramD,pb1,pb2);
     if checkSusOsc(t,mh1Matrix(1,:))==true
         score=score+1;
     end
@@ -49,7 +49,7 @@ if score>1
     % Check the effect of removing deltaC, deltaD
     paramCD=paramC;
     paramCD(3)=0;
-    [t,mh1Matrix]=dCmodel(paramCD,pb1,pb2);
+    [t,mh1Matrix]=dCmodelPF(paramCD,pb1,pb2);
     if checkSusOsc(t,mh1Matrix(1,:))==true
         score=score+1;
     end
@@ -69,7 +69,7 @@ if score>6
     paramph1ph7=parameters;
     paramph1ph7(14)=0;
     paramph1ph7(18)=0;
-    [t,mh1Matrix,mh7Matrix]=dCmodel(paramph1ph7,pb1,pb2);
+    [t,mh1Matrix,mh7Matrix]=dCmodelPF(paramph1ph7,pb1,pb2);
     % Calculate the average combined mRNA level of her1 and her7
     mh17=mh1Matrix(1,:)+mh7Matrix(1,:);
     level0=(sum(mh17(1,101:end)))/200;
@@ -78,7 +78,7 @@ if score>6
     % Check the effect of removing Her1, Her7, and deltaC
     paramph1ph7C=paramph1ph7;
     paramph1ph7C(1)=0;
-    [t,mh1Matrix,mh7Matrix]=dCmodel(paramph1ph7C,pb1,pb2);
+    [t,mh1Matrix,mh7Matrix]=dCmodelPF(paramph1ph7C,pb1,pb2);
     mh17=mh1Matrix(1,:)+mh7Matrix(1,:);
     level1=(sum(mh17(1,101:end)))/200;
     if level0/level1>1.3 && level0/level1<1.4
@@ -88,7 +88,7 @@ if score>6
     % Check the effect of removing Her1, Her7, and deltaD
     paramph1ph7D=paramph1ph7;
     paramph1ph7D(3)=0;
-    [t,mh1Matrix,mh7Matrix]=dCmodel(paramph1ph7D,pb1,pb2);
+    [t,mh1Matrix,mh7Matrix]=dCmodelPF(paramph1ph7D,pb1,pb2);
     mh17=mh1Matrix(1,:)+mh7Matrix(1,:);
     level2=(sum(mh17(1,101:end)))/200;
     if level0/level2>1.74 && level0/level2<1.84
@@ -99,7 +99,7 @@ if score>6
     paramph1ph7CD=paramph1ph7;
     paramph1ph7CD(1)=0;
     paramph1ph7CD(3)=0;
-    [t,mh1Matrix,mh7Matrix]=dCmodel(paramph1ph7CD,pb1,pb2);
+    [t,mh1Matrix,mh7Matrix]=dCmodelPF(paramph1ph7CD,pb1,pb2);
     mh17=mh1Matrix(1,:)+mh7Matrix(1,:);
     level3=(sum(mh17(1,101:end)))/200;
     if level2/level3>0.95 && level2/level3<1.05
